@@ -1,7 +1,7 @@
 import React, { useCallback, useEffect, useRef, useState } from "react";
 import * as THREE from "three";
 import { OrbitControls } from "three/examples/jsm/controls/OrbitControls";
-import { loadGLTFModel } from "../../lib/model";
+import { GLTFLoader } from "three/examples/jsm/loaders/GLTFLoader";
 import { BodyModel, Container, Footer, Header } from "./styles";
 
 const Rabbit: React.FC = () => {
@@ -71,18 +71,42 @@ const Rabbit: React.FC = () => {
       controls.target = target;
       setControls(controls);
 
-      loadGLTFModel(scene, "/rabbit/scene.gltf", {
-        receiveShadow: false,
-        castShadow: false,
-      }).then(() => {
+      const gltfLoader = new GLTFLoader();
+
+      let mixer: THREE.AnimationMixer;
+      gltfLoader.load("/rabbit/scene.gltf", (gltf) => {
+        const obj = gltf.scene;
+        obj.name = "rabbit";
+        obj.position.y = 0;
+        obj.position.x = 0;
+        obj.receiveShadow = false;
+        obj.castShadow = false;
+        scene.add(obj);
+
         animate();
         setLoading(false);
+        mixer = new THREE.AnimationMixer(obj);
+        const clips = gltf.animations;
+        clips.forEach((clip) => {
+          const action = mixer.clipAction(clip);
+          action.play();
+        });
+        // obj.traverse(function (child) {
+        //   if (child.isMesh) {
+        //     child.castShadow = false;
+        //     child.receiveShadow = false;
+        //   }
+        // });
       });
 
       let req: any = null;
       let frame = 0;
       const animate = () => {
         req = requestAnimationFrame(animate);
+
+        if (mixer) {
+          mixer.update(0.01);
+        }
 
         frame = frame <= 100 ? frame + 1 : frame;
 
@@ -125,7 +149,7 @@ const Rabbit: React.FC = () => {
         </h1>
       </Header>
       <BodyModel ref={refBody}>{loading && <p>loading...</p>}</BodyModel>
-      <Footer>~~ Created by Jun ❤️ ~~</Footer>
+      <Footer>~~ Created by Jun 💜 ~~</Footer>
     </Container>
   );
 };
