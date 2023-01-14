@@ -11,20 +11,27 @@ const Container = styled.div`
 `;
 
 const Header = styled.div`
-  font-size: 4rem;
   left: 0;
   position: absolute;
   top: 5rem;
   width: 100%;
   z-index: 9;
-  @media (max-width: 480px) {
-    font-size: 2.5rem;
-  }
   h1 {
-    font-size: inherit;
+    font-size: 64px;
+  }
+  @media (max-width: 480px) {
+    h1 {
+      font-size: 28px;
+    }
   }
   span {
-    background: linear-gradient(orange, red);
+    position: relative;
+    background: #ba28ed;
+    background: repeating-radial-gradient(
+      ellipse farthest-corner at center center,
+      #ba28ed 0%,
+      #460f59 100%
+    );
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
   }
@@ -40,7 +47,7 @@ const BodyModel = styled.div`
 `;
 
 const Footer = styled.div`
-  bottom: 5rem;
+  bottom: 12%;
   position: absolute;
   width: 100%;
   z-index: 9;
