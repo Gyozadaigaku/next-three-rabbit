@@ -1,0 +1,8 @@
+Model Information:
+* title:	Bumm the Bunny - Simple Series
+* source:	https://sketchfab.com/3d-models/bumm-the-bunny-simple-series-6911226fc91f49dfbfed4506878fe709
+* author:	Omabuarts Studio (https://sketchfab.com/omabuarts)
+
+Model License:
+* license type:	SKETCHFAB Standard (https://sketchfab.com/licenses)
+* requirements:	Under basic restrictions, use worldwide, on all types of media, commercially or not, and in all types of derivative works
